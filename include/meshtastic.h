@@ -1,0 +1,1 @@
+#define MESHTASTIC_NUMBER 32

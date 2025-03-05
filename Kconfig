@@ -1,0 +1,6 @@
+rsource "lib/Kconfig"
+
+config MESHTASTIC
+	bool "enable meshtastic subsystem"
+	help
+		Idk something
