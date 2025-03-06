@@ -1,4 +1,5 @@
 add_subdirectory_ifdef(CONFIG_MESHTASTIC_SHELL shell)
+add_subdirectory(config)
 
 
 zephyr_library()
