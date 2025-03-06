@@ -1,0 +1,4 @@
+config MESHTASTIC_SHELL
+	bool "meshtastic shell"
+	help
+		enable debug meshtastic shell
