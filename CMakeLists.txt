@@ -1,4 +1,51 @@
+if (CONFIG_MESHTASTIC)
+zephyr_library_named(zephyr_meshtastic) # this creates a zephyr-meshtastic library target
+
 message("IDEK WHATS" "GOING ON")
+#
+set(MESHTASTIC_DIR ${ZEPHYR_CURRENT_MODULE_DIR})
+
+list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
+include(nanopb)
+
+message("NANOPB SRC ROOT FOLDER" ${NANOPB_SRC_ROOT_FOLDER}/generator)
+set(NANOPB_IMPORT_DIRS ${NANOPB_SRC_ROOT_FOLDER}/generator/proto)
+message("EXTRA LIBS: " ${NANOPB_IMPORT_DIRS})
+message("Include Dirs" ${NANOPB_INCLUDE_DIRS})
+
+set(pb_sources
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/admin.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/apponly.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/atak.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/cannedmessages.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/channel.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/clientonly.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/config.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/connection_status.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/device_ui.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/interdevice.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/localonly.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/mesh.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/module_config.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/mqtt.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/paxcount.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/portnums.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/powermon.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/remote_hardware.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/rtttl.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/storeforward.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/telemetry.proto
+    ${MESHTASTIC_DIR}/protobufs/meshtastic/xmodem.proto
+    ${NANOPB_SRC_ROOT_FOLDER}/generator/proto/google/protobuf/descriptor.proto
+    ${MESHTASTIC_DIR}/protobufs/nanopb.proto
+)
+
+zephyr_nanopb_sources(zephyr_meshtastic ${pb_sources})
+
+zephyr_include_directories(${CMAKE_CURRENT_BINARY_DIR}/protobufs)
+
+# Isn't building with correct include in nanopb.pb.h, so do it here manually
+target_compile_options(zephyr_meshtastic PUBLIC -include ${CMAKE_CURRENT_BINARY_DIR}/descriptor.pb.h)
 
 # This is needed so that custom driver classes using system calls are taken into
 # account
@@ -7,3 +54,5 @@ zephyr_include_directories(include)
 
 add_subdirectory(drivers)
 add_subdirectory(lib)
+
+endif()

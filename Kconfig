@@ -4,5 +4,6 @@ config MESHTASTIC
 	bool "enable meshtastic subsystem"
 	select LORA
 	select ZBUS
+	select NANOPB
 	help
 		Idk something
