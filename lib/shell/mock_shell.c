@@ -8,16 +8,11 @@
 #include <stdlib.h>
 #include <zephyr/drivers/uart.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
 #include <zephyr/shell/shell.h>
 #include <zephyr/version.h>
 
-#ifdef CONFIG_ARCH_POSIX
-#include <unistd.h>
-#else
-#include <zephyr/posix/unistd.h>
-#endif
 
+#include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(meshtastic_shell);
 
 extern void foo(void);

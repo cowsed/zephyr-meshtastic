@@ -1,0 +1,10 @@
+/ {
+	aliases{
+		meshtastic-radio = &lora0;
+	};
+
+	lora0 : lora0{
+		status="okay";
+		compatible = "generic,lora";
+	};
+}
