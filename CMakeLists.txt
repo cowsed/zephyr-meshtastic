@@ -1,17 +1,12 @@
 if (CONFIG_MESHTASTIC)
 zephyr_library_named(zephyr_meshtastic) # this creates a zephyr-meshtastic library target
 
-message("IDEK WHATS" "GOING ON")
-#
 set(MESHTASTIC_DIR ${ZEPHYR_CURRENT_MODULE_DIR})
 
 list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
 include(nanopb)
 
-message("NANOPB SRC ROOT FOLDER" ${NANOPB_SRC_ROOT_FOLDER}/generator)
 set(NANOPB_IMPORT_DIRS ${NANOPB_SRC_ROOT_FOLDER}/generator/proto)
-message("EXTRA LIBS: " ${NANOPB_IMPORT_DIRS})
-message("Include Dirs" ${NANOPB_INCLUDE_DIRS})
 
 set(pb_sources
     ${MESHTASTIC_DIR}/protobufs/meshtastic/admin.proto

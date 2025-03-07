@@ -1,0 +1,3 @@
+if LORA
+rsource "generic_lora/Kconfig"
+endif

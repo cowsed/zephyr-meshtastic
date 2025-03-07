@@ -1,4 +1,5 @@
 rsource "lib/Kconfig"
+rsource "drivers/Kconfig"
 
 config MESHTASTIC
 	bool "enable meshtastic subsystem"

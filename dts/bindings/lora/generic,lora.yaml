@@ -1,0 +1,5 @@
+description: Generic Test LoRa
+
+compatible: "generic,lora"
+
+include: [base.yaml]

@@ -3,8 +3,8 @@
 		meshtastic-radio = &lora0;
 	};
 
-	lora0 : lora0{
-		status="okay";
+	lora0: lora0 {
+		status = "okay";
 		compatible = "generic,lora";
 	};
-}
+};

@@ -1,0 +1,7 @@
+menuconfig GENERIC_LORA
+	bool "Generic lora device for testing"
+	default y
+	depends on DT_HAS_GENERIC_LORA_ENABLED
+	help
+	  Enable driver for lora test
+
