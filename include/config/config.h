@@ -1,3 +1,5 @@
+#include "meshtastic/config.pb.h"
+#include "meshtastic/mesh.pb.h"
 
-
-int set_meshtastic_name(const char *short_name, const char *long_name);
+int get_user_config(meshtastic_User *user);
+int set_user_config(const meshtastic_User *user);

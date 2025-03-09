@@ -35,4 +35,4 @@ int init_meshtastic() {
   return 0;
 }
 
-SYS_INIT(init_meshtastic, POST_KERNEL, CONFIG_LORA_INIT_PRIORITY);
+SYS_INIT(init_meshtastic, APPLICATION, 0);
