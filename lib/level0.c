@@ -22,6 +22,7 @@ struct level0_msg {
   int b;
 };
 
+// Raw packets
 ZBUS_CHAN_DEFINE(meshtastic_level0_chan, /* Name */
                  struct level0_msg,      /* Message type */
 
@@ -30,8 +31,11 @@ ZBUS_CHAN_DEFINE(meshtastic_level0_chan, /* Name */
                  ZBUS_OBSERVERS_EMPTY, /* observers */
                  ZBUS_MSG_INIT(.a = 0, .b = 1));
 
+int meshtastic_config_subsys_init(void);
+
 int init_meshtastic() {
   LOG_INF("Meshtastic Init");
+  meshtastic_config_subsys_init();
   return 0;
 }
 
