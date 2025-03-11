@@ -1,0 +1,13 @@
+# Analog Devices Speaker Amp
+
+# Copyright (c) 2025 Launch Initiative
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig MAX98357
+	bool "MAX98357 Speaker Amp"
+	default y
+	depends on DT_HAS_ADI_MAX98357_ENABLED
+	select I2S
+	help
+	  Enable driver for MAX98357 Speaker Amp.
+

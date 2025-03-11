@@ -51,12 +51,13 @@
 		};
 	};
 
+	// Scrollflag Probably the issue
 	i2s0_default: i2s0_default {
 		group1 {
-			pinmux = <I2S0_MCLK_GPIO4>,
+			pinmux = <I2S0_MCLK_GPIO48>,
 				 <I2S0_O_WS_GPIO5>,
-				 <I2S0_O_BCK_GPIO6>,
-				 <I2S0_O_SD_GPIO7>,
+				 <I2S0_O_BCK_GPIO7>,
+				 <I2S0_O_SD_GPIO6>,
 				 <I2S0_I_WS_GPIO15>,
 				 <I2S0_I_BCK_GPIO16>;
 			output-enable;
@@ -66,6 +67,7 @@
 			input-enable;
 		};
 	};
+
 
 	i2s1_default: i2s1_default {
 		group1 {

@@ -21,6 +21,7 @@
 
 	aliases {
 		i2c-0 = &i2c0;
+//		i2s-tx = &max;
 		watchdog0 = &wdt0;
 		lora0 = &sx1262;
 		led0 = &led1;
@@ -186,7 +187,7 @@
 &i2s0 {
 	pinctrl-0 = <&i2s0_default>;
 	pinctrl-names = "default";
-	status = "disabled";
+	status = "okay";
 };
 
 &i2s1 {

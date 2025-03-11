@@ -1,1 +1,2 @@
 add_subdirectory_ifdef(CONFIG_LORA lora)
+add_subdirectory_ifdef(CONFIG_I2S i2s/max98357)

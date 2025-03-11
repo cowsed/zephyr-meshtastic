@@ -1,3 +1,5 @@
 menu "Drivers"
 rsource "lora/Kconfig"
+rsource "i2s/max98357/Kconfig"
+rsource "misc/aw9364/Kconfig"
 endmenu
