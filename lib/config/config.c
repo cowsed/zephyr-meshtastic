@@ -10,17 +10,16 @@ LOG_MODULE_REGISTER(meshtastic_config);
 #define MESHTASTIC_CONFIG_VERSION_KEY (MESHTASTIC_CONFIG_ROOT "/version")
 #define MESHTASTIC_CONFIG_USER_KEY (MESHTASTIC_CONFIG_ROOT "/user")
 
-typedef uint8_t macaddr[6];
-void get_mac_addr(macaddr *m) {
-  *m[0] = 0;
-  *m[1] = 1;
-  *m[2] = 2;
-  *m[3] = 3;
-  *m[4] = 4;
-  *m[5] = 5;
-}
+static meshtastic_User user_settings = {0};
 
 int get_user_config(meshtastic_User *user) {
+  *user = user_settings;
+  return 0;
+}
+
+int load_user_config() {
+  meshtastic_User *user = &user_settings;
+
   char buf[BASE64_OVERHEAD(meshtastic_User_size)] = {0};
   // settings
   int num_read = 0;
@@ -40,14 +39,22 @@ int get_user_config(meshtastic_User *user) {
 
   return 0;
 }
+
 int set_user_config(const meshtastic_User *user) {
   PROTO64_ENCODE(user, meshtastic_User);
   if (user_rc != 0) {
     LOG_ERR("Encoding Failed: %d", user_rc);
     return user_rc;
   }
-  return settings_save_one(MESHTASTIC_CONFIG_USER_KEY, user_encoded,
-                           user_num_written);
+
+  int rc = settings_save_one(MESHTASTIC_CONFIG_USER_KEY, user_encoded,
+                             user_num_written);
+  if (rc != 0) {
+    LOG_ERR("Failed to save user config: %d", rc);
+    return rc;
+  }
+  user_settings = *user;
+  return 0;
 }
 
 int write_initial_mststc_config(uint8_t uniqueId[16]) {
@@ -73,8 +80,7 @@ int write_initial_mststc_config(uint8_t uniqueId[16]) {
   memcpy(&usr.id, uniqueId, sizeof(usr.id));
 
   set_user_config(&usr);
-  meshtastic_User usr2 = {0};
-  get_user_config(&usr2);
+
   LOG_INF("FInished Meshtastic init");
   return 0;
 }
@@ -96,13 +102,11 @@ int meshtastic_config_subsys_init(void) {
   if (num_read > 0) {
     // found version
     LOG_INF("GOUND VERSION");
+    load_user_config();
   } else {
     LOG_INF("Didn't find config version key. Writing initial config");
 
-    uint8_t buf[16] = {
-        0x88, 0x84, 0x88, 0x84, 0x88, 0x84, 0x88, 0x84,
-        0x88, 0x84, 0x88, 0x84, 0x88, 0x84, 0x88, 0x0,
-    };
+    uint8_t buf[16] = "+7818128902";
     write_initial_mststc_config(buf);
   }
 

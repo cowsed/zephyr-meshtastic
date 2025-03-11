@@ -9,6 +9,9 @@ typedef uint32_t PacketID;
 typedef uint8_t PacketHeaderFlags;
 typedef uint8_t PacketChannelHash;
 
+// https://meshtastic.org/docs/overview/mesh-algo/
+#define MESHTASTIC_SYNC_WORD 0x2B
+
 void meshtastic_send_level0(meshtastic_MeshPacket_Priority tx_priority,
                             bool do_csma, uint8_t *data, size_t len);
 

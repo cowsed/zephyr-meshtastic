@@ -21,7 +21,7 @@
 	aliases {
 		i2c-0 = &i2c0;
 		watchdog0 = &wdt0;
-//		lora0 = &sx1262;
+		lora0 = &sx1262;
 		led0 = &led1;
 	};
 
@@ -253,21 +253,21 @@
 //			rgb-param = [40 02 14]; //default from datasheet
 //		};
 //	};
-//	sx1262: sx1262@1 {
-//			compatible = "semtech,sx1262";
-//			reg = <0x01>;
-//			spi-max-frequency = <3000000>;
-//
-//			dio2-tx-enable;
-//			dio3-tcxo-voltage = <SX126X_DIO3_TCXO_1V8>;
-//			tcxo-power-startup-delay-ms = <100>;
-//			
-//			reset-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>; 
-//
-//			busy-gpios = <&gpio0 13 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
-//			dio1-gpios = <&gpio1 13 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
-//
-//	};
+	sx1262: sx1262@1 {
+			compatible = "semtech,sx1262";
+			reg = <0x01>;
+			spi-max-frequency = <3000000>;
+
+			dio2-tx-enable;
+			dio3-tcxo-voltage = <SX126X_DIO3_TCXO_1V8>;
+			tcxo-power-startup-delay-ms = <100>;
+			
+			reset-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>; 
+
+			busy-gpios = <&gpio0 13 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
+			dio1-gpios = <&gpio1 13 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
+
+	};
 //
 //
 };
