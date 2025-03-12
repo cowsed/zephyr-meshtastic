@@ -21,13 +21,14 @@
 
 	aliases {
 		i2c-0 = &i2c0;
-//		i2s-tx = &max;
+		i2s-tx = &i2s0;
 		watchdog0 = &wdt0;
 		lora0 = &sx1262;
 		led0 = &led1;
 	};
 
 	chosen {
+		zephyr,bt-c2h-uart = &uart1;
 		zephyr,sram = &sram0;
 		zephyr,console = &usb_serial;
 		zephyr,shell-uart = &usb_serial;
@@ -146,7 +147,6 @@
 		gpios = <10 GPIO_ACTIVE_HIGH>;
 		output-high;
 	};
-
 };
 
 &gpio1 {
@@ -188,6 +188,16 @@
 	pinctrl-0 = <&i2s0_default>;
 	pinctrl-names = "default";
 	status = "okay";
+	max: max@0{
+		compaitble = "adi,max98357";
+		status = "okay";
+		reg = <0>;
+		sd-mode-gpios = <0 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&dma{
+	status="okay";
 };
 
 &i2s1 {

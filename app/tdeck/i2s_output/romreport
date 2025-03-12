@@ -1,0 +1,21 @@
+-- west build: running target rom_report
+[0/1] cd /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/i2s_output/build && /home/unknown/Clubs/Launch/Zephyr/.direnv/python-3.13/bin/python3 /home/unknown/Clubs/Launch/Zephyr/zephyr/scripts/footprint/size_report -k /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/i2s_output/build/zephyr/zephyr.elf -z /home/unknown/Clubs/Launch/Zephyr/zephyr -o /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/i2s_output/build --workspace=/home/unknown/Clubs/Launch/Zephyr -d 99 rom
+WARN: Symbol '__divdi3' section 'None' is not in RAM or ROM.
+WARN: Symbol 'memcmp' section 'None' is not in RAM or ROM.
+WARN: Symbol 'strcmp' section 'None' is not in RAM or ROM.
+WARN: Symbol '__popcountsi2' section 'None' is not in RAM or ROM.
+WARN: Symbol 'memset' section 'None' is not in RAM or ROM.
+WARN: Symbol '__bswapsi2' section 'None' is not in RAM or ROM.
+WARN: Symbol '__umoddi3' section 'None' is not in RAM or ROM.
+WARN: Symbol '__moddi3' section 'None' is not in RAM or ROM.
+WARN: Symbol 'strnlen' section 'None' is not in RAM or ROM.
+WARN: Symbol 'strchr' section 'None' is not in RAM or ROM.
+WARN: Symbol '__bswapdi2' section 'None' is not in RAM or ROM.
+WARN: Symbol '__ashldi3' section 'None' is not in RAM or ROM.
+WARN: Symbol '__udivdi3' section 'None' is not in RAM or ROM.
+WARN: Symbol '__lshrdi3' section 'None' is not in RAM or ROM.
+WARN: Symbol 'memchr' section 'None' is not in RAM or ROM.
+WARN: Symbol '__ffsdi2' section 'None' is not in RAM or ROM.
+WARN: Symbol 'memcpy' section 'None' is not in RAM or ROM.
+WARN: Symbol 'strlen' section 'None' is not in RAM or ROM.
+ninja: build stopped: interrupted by user.

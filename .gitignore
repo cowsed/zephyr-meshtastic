@@ -1,2 +1,3 @@
 build/
 flash.bin
+app/tdeck/i2s_output/audio/

@@ -7,6 +7,7 @@ menuconfig MAX98357
 	bool "MAX98357 Speaker Amp"
 	default y
 	depends on DT_HAS_ADI_MAX98357_ENABLED
+	select DAI
 	select I2S
 	help
 	  Enable driver for MAX98357 Speaker Amp.

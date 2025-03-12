@@ -1,4 +1,8 @@
+add_subdirectory(drivers)
 if (CONFIG_MESHTASTIC)
+add_subdirectory_ifdef(CONFIG_MESHTASTIC lib)
+
+
 zephyr_library_named(zephyr_meshtastic) # this creates a zephyr-meshtastic library target
 
 set(MESHTASTIC_DIR ${ZEPHYR_CURRENT_MODULE_DIR})
@@ -38,6 +42,7 @@ set(pb_sources
 zephyr_nanopb_sources(zephyr_meshtastic ${pb_sources})
 
 zephyr_include_directories(${CMAKE_CURRENT_BINARY_DIR}/protobufs)
+zephyr_include_directories(${NANOPB_SRC_ROOT_FOLDER}) #pb.h
 
 # Isn't building with correct include in nanopb.pb.h, so do it here manually
 target_compile_options(zephyr_meshtastic PUBLIC -include ${CMAKE_CURRENT_BINARY_DIR}/descriptor.pb.h)
@@ -47,7 +52,5 @@ target_compile_options(zephyr_meshtastic PUBLIC -include ${CMAKE_CURRENT_BINARY_
 zephyr_syscall_include_directories(include)
 zephyr_include_directories(include)
 
-add_subdirectory(drivers)
-add_subdirectory(lib)
 
 endif()

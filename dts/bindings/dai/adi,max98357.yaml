@@ -1,0 +1,15 @@
+# Copyright (c) 2025 Launch Initiative
+# SPDX-License-Identifier: Apache-2.0
+# datasheet: https://www.analog.com/media/en/technical-documentation/data-sheets/max98357a-max98357b.pdf
+
+description: Analog Devices Speaker Amp
+
+compatible: "adi,max98357"
+
+include: [i2s-device.yaml]
+
+properties:
+  sd-mode-gpios:
+    required: true
+    type: phandle-array
+    description: GPIO spec for sd mode pin
