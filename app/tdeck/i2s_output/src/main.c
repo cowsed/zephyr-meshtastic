@@ -7,7 +7,14 @@
 #include <stdio.h>
 #include <zephyr/drivers/i2s.h>
 #include <zephyr/kernel.h>
+#include <zephyr/logging/log.h>
 #include <zephyr/sys/iterable_sections.h>
+LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
+
+#define MINIMP3_NONSTANDARD_BUT_LOGICAL
+#define MINIMP3_ONLY_MP3
+#define MINIMP3_IMPLEMENTATION
+#include "minimp3.h"
 
 #define SAMPLE_NO 128
 
@@ -32,10 +39,9 @@ static void fill_buf(int16_t *tx_block, int source_block_index, int att) {
 
 K_MEM_SLAB_DEFINE(tx_0_mem_slab, BLOCK_SIZE, NUM_BLOCKS, 2);
 
-int main(void) {
+int setup_i2s(const struct device *dev_i2s) {
   struct i2s_config i2s_cfg;
   int ret;
-  const struct device *dev_i2s = DEVICE_DT_GET(DT_ALIAS(i2s_tx));
 
   if (!device_is_ready(dev_i2s)) {
     printf("I2S device not ready\n");
@@ -57,12 +63,25 @@ int main(void) {
     printf("Failed to configure I2S stream\n");
     return ret;
   }
-  printf("I2S stream ready\n");
+  return 0;
+}
+
+static mp3dec_t mp3d;
+
+int main(void) {
+  const struct device *dev_i2s = DEVICE_DT_GET(DT_ALIAS(i2s_tx));
+  setup_i2s(dev_i2s);
+  printf("I2S ready\n");
+
+  mp3dec_init(&mp3d);
+  printf("mp3dec ready");
+
   int num_samples = (int)(sizeof(source) / sizeof(int16_t));
   printf("Sampoles: %d\n", num_samples);
+
   int source_block_ind = 0;
   void *my_block;
-  ret = k_mem_slab_alloc(&tx_0_mem_slab, &my_block, K_FOREVER);
+  int ret = k_mem_slab_alloc(&tx_0_mem_slab, &my_block, K_FOREVER);
   fill_buf((uint16_t *)my_block, source_block_ind, 1);
   source_block_ind++;
 
