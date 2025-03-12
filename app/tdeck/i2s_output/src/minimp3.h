@@ -1590,8 +1590,8 @@ static void mp3d_DCT_II(float *grbuf, int n) {
 #endif /* HAVE_SIMD */
 #ifdef MINIMP3_ONLY_SIMD
   {
-  }    /* for HAVE_SIMD=1, MINIMP3_ONLY_SIMD=1 case we do not need non-intrinsic
-          "else" branch */
+  } /* for HAVE_SIMD=1, MINIMP3_ONLY_SIMD=1 case we do not need non-intrinsic
+       "else" branch */
 #else  /* MINIMP3_ONLY_SIMD */
   for (; k < n; k++) {
     float t[4][8], *x, *y = grbuf + k;
@@ -1786,7 +1786,13 @@ static void mp3d_synth(float *xl, mp3d_sample_t *dstl, int nch, float *lins) {
       zlin[4 * i - 64 + 3] = xr[18 * (1 + i)];
 
       V0(0)
-      V2(1) V1(2) V2(3) V1(4) V2(5) V1(6) V2(7)
+      V2(1)
+      V1(2)
+      V2(3)
+      V1(4)
+      V2(5)
+      V1(6)
+      V2(7)
 
       {
 #ifndef MINIMP3_FLOAT_OUTPUT
@@ -1862,8 +1868,8 @@ static void mp3d_synth(float *xl, mp3d_sample_t *dstl, int nch, float *lins) {
 #endif /* HAVE_SIMD */
 #ifdef MINIMP3_ONLY_SIMD
   {
-  }   /* for HAVE_SIMD=1, MINIMP3_ONLY_SIMD=1 case we do not need non-intrinsic
-         "else" branch */
+  } /* for HAVE_SIMD=1, MINIMP3_ONLY_SIMD=1 case we do not need non-intrinsic
+       "else" branch */
 #else /* MINIMP3_ONLY_SIMD */
   for (i = 14; i >= 0; i--) {
 #define LOAD(k)                                                                \
@@ -1904,7 +1910,13 @@ static void mp3d_synth(float *xl, mp3d_sample_t *dstl, int nch, float *lins) {
     zlin[4 * (i - 16) + 3] = xr[18 * (1 + i)];
 
     S0(0)
-    S2(1) S1(2) S2(3) S1(4) S2(5) S1(6) S2(7)
+    S2(1)
+    S1(2)
+    S2(3)
+    S1(4)
+    S2(5)
+    S1(6)
+    S2(7)
 
         dstr[(15 - i) * nch] = mp3d_scale_pcm(a[1]);
     dstr[(17 + i) * nch] = mp3d_scale_pcm(b[1]);
@@ -1998,6 +2010,7 @@ int mp3dec_decode_frame(mp3dec_t *dec, const uint8_t *mp3, int mp3_bytes,
   const uint8_t *hdr;
   bs_t bs_frame[1];
   mp3dec_scratch_t scratch;
+  printf("Made to decode\n\n");
 
   if (mp3_bytes > 4 && dec->header[0] == 0xff &&
       hdr_compare(dec->header, mp3)) {
@@ -2008,10 +2021,15 @@ int mp3dec_decode_frame(mp3dec_t *dec, const uint8_t *mp3, int mp3_bytes,
       frame_size = 0;
     }
   }
+  printf("after frame size\n\n");
+
   if (!frame_size) {
+    printf("not frame size\n\n");
+
     memset(dec, 0, sizeof(mp3dec_t));
     i = mp3d_find_frame(mp3, mp3_bytes, &dec->free_format_bytes, &frame_size);
     if (!frame_size || i + frame_size > mp3_bytes) {
+      printf("Really no frame size\n0");
       info->frame_bytes = i;
       return 0;
     }
@@ -2019,6 +2037,7 @@ int mp3dec_decode_frame(mp3dec_t *dec, const uint8_t *mp3, int mp3_bytes,
 
   hdr = mp3 + i;
   memcpy(dec->header, hdr, HDR_SIZE);
+  printf("After memcpy\n");
   info->frame_bytes = i + frame_size;
   info->frame_offset = i;
   info->channels = HDR_IS_MONO(hdr) ? 1 : 2;
@@ -2027,9 +2046,11 @@ int mp3dec_decode_frame(mp3dec_t *dec, const uint8_t *mp3, int mp3_bytes,
   info->bitrate_kbps = hdr_bitrate_kbps(hdr);
 
   if (!pcm) {
+    printf("not pcm\n");
     return hdr_frame_samples(hdr);
   }
 
+  printf("pre bs init\n");
   bs_init(bs_frame, hdr + HDR_SIZE, frame_size - HDR_SIZE);
   if (HDR_IS_CRC(hdr)) {
     get_bits(bs_frame, 16);

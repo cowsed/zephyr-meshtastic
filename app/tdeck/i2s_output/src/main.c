@@ -16,24 +16,10 @@ LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 #define MINIMP3_IMPLEMENTATION
 #include "minimp3.h"
 
+extern unsigned char *somewhatgraphicultramodern_mp3;
+extern unsigned int somewhatgraphicultramodern_mp3_len;
+
 #define SAMPLE_NO 128
-
-int16_t source[] = {
-#include "cout.inc"
-};
-
-static void fill_buf(int16_t *tx_block, int source_block_index, int att) {
-  att = 2;
-
-  for (int i = 0; i < SAMPLE_NO; i++) {
-    size_t source_index = source_block_index * SAMPLE_NO + i;
-    int16_t sample =
-        source[source_index % (sizeof(source) / sizeof(source[0]))];
-    tx_block[2 * i] = sample / (1 << att);
-    tx_block[2 * i + 1] = sample / (1 << att); // data[r_idx] / (1 << att);
-  }
-}
-
 #define NUM_BLOCKS 20
 #define BLOCK_SIZE (2 * 2 * SAMPLE_NO)
 
@@ -67,6 +53,7 @@ int setup_i2s(const struct device *dev_i2s) {
 }
 
 static mp3dec_t mp3d;
+short pcm[MINIMP3_MAX_SAMPLES_PER_FRAME];
 
 int main(void) {
   const struct device *dev_i2s = DEVICE_DT_GET(DT_ALIAS(i2s_tx));
@@ -76,54 +63,63 @@ int main(void) {
   mp3dec_init(&mp3d);
   printf("mp3dec ready");
 
-  int num_samples = (int)(sizeof(source) / sizeof(int16_t));
-  printf("Sampoles: %d\n", num_samples);
+  uint8_t *input_buf = somewhatgraphicultramodern_mp3;
+  unsigned int buf_size = somewhatgraphicultramodern_mp3_len;
 
-  int source_block_ind = 0;
-  void *my_block;
-  int ret = k_mem_slab_alloc(&tx_0_mem_slab, &my_block, K_FOREVER);
-  fill_buf((uint16_t *)my_block, source_block_ind, 1);
-  source_block_ind++;
+  mp3dec_frame_info_t info;
+  /*unsigned char *input_buf; - input byte stream*/
+  int samples = mp3dec_decode_frame(&mp3d, input_buf, buf_size, pcm, &info);
+  printf("Decoded %d samples\n\n", samples);
+  return 0;
+  //   int num_samples = (int)(sizeof(source) / sizeof(int16_t));
+  //   printf("Sampoles: %d\n", num_samples);
 
-  /* Send first block */
-  ret = i2s_write(dev_i2s, my_block, BLOCK_SIZE);
-  if (ret < 0) {
-    printf("Could not write TX buffer: err %d\n", ret);
-    return ret;
-  }
-  printf("Wrote one block\n");
-  /* Trigger the I2S transmission */
-  ret = i2s_trigger(dev_i2s, I2S_DIR_TX, I2S_TRIGGER_START);
-  if (ret < 0) {
-    printf("Could not trigger I2S tx: err %d\n", ret);
-    return ret;
-  }
-  printf("Started\n");
+  //   int source_block_ind = 0;
+  //   void *my_block;
+  //   int ret = k_mem_slab_alloc(&tx_0_mem_slab, &my_block, K_FOREVER);
+  //   fill_buf((uint16_t *)my_block, source_block_ind, 1);
+  //   source_block_ind++;
 
-  for (int i = 0; i < 10000; i++) {
-    void *my_block;
-    int ret = k_mem_slab_alloc(&tx_0_mem_slab, &my_block, K_FOREVER);
-    if (ret < 0) {
-      printf("Failed to allocate TX block\n");
-      return ret;
-    }
-    fill_buf((uint16_t *)my_block, source_block_ind, 1);
-    source_block_ind++;
+  //   /* Send first block */
+  //   ret = i2s_write(dev_i2s, my_block, BLOCK_SIZE);
+  //   if (ret < 0) {
+  //     printf("Could not write TX buffer: err %d\n", ret);
+  //     return ret;
+  //   }
+  //   printf("Wrote one block\n");
+  //   /* Trigger the I2S transmission */
+  //   ret = i2s_trigger(dev_i2s, I2S_DIR_TX, I2S_TRIGGER_START);
+  //   if (ret < 0) {
+  //     printf("Could not trigger I2S tx: err %d\n", ret);
+  //     return ret;
+  //   }
+  //   printf("Started\n");
 
-    ret = i2s_write(dev_i2s, my_block, BLOCK_SIZE);
-    if (ret < 0) {
-      printf("Could not write TX buffer: err %d\n", ret);
-    }
-  }
+  //   for (int i = 0; i < 10000; i++) {
+  //     void *my_block;
+  //     int ret = k_mem_slab_alloc(&tx_0_mem_slab, &my_block, K_FOREVER);
+  //     if (ret < 0) {
+  //       printf("Failed to allocate TX block\n");
+  //       return ret;
+  //     }
+  //     fill_buf((uint16_t *)my_block, source_block_ind, 1);
+  //     source_block_ind++;
 
-  /* Drain TX queue */
-  //  i think this just blocks until it runs out of data then goes back to the
-  //  stopped state
-  ret = i2s_trigger(dev_i2s, I2S_DIR_TX, I2S_TRIGGER_DRAIN);
-  if (ret < 0) {
-    printf("Could not trigger I2S tx\n");
-    return ret;
-  }
+  //     ret = i2s_write(dev_i2s, my_block, BLOCK_SIZE);
+  //     if (ret < 0) {
+  //       printf("Could not write TX buffer: err %d\n", ret);
+  //     }
+  //   }
+
+  //   /* Drain TX queue */
+  //   //  i think this just blocks until it runs out of data then goes back to
+  //   the
+  //   //  stopped state
+  //   ret = i2s_trigger(dev_i2s, I2S_DIR_TX, I2S_TRIGGER_DRAIN);
+  //   if (ret < 0) {
+  //     printf("Could not trigger I2S tx\n");
+  //     return ret;
+  //   }
 
   printf("Finished\n");
   return 0;

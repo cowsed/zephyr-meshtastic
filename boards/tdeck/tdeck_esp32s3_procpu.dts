@@ -280,6 +280,18 @@
 			dio1-gpios = <&gpio1 13 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
 
 	};
+
+	sdhccustom: sdhc-asdf@2 {
+			compatible = "zephyr,sdhc-spi-slot";
+			reg = <2>;
+			status = "okay";
+			mmc {
+				compatible = "zephyr,sdmmc-disk";
+				disk-name = "SD";
+				status = "okay";
+			};
+			spi-max-frequency = <24000000>;
+	};
 };
 
 &twai {
