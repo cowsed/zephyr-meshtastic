@@ -1,2 +1,3 @@
 add_subdirectory_ifdef(CONFIG_LORA lora)
 add_subdirectory_ifdef(CONFIG_DAI dai/max98357)
+add_subdirectory_ifdef(CONFIG_AW9364 misc/aw9364)

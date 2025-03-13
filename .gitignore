@@ -1,3 +1,15 @@
 build/
 flash.bin
 app/tdeck/i2s_output/audio/
+app/tdeck/spinningfish/americanidiot.8000.wav
+app/tdeck/spinningfish/americanidiot.48000.wav
+app/tdeck/spinningfish/americanidiot.cmp.8000
+app/tdeck/spinningfish/americanidiot.cmp.8000.3200
+app/tdeck/spinningfish/americanidiot.decomp.8000
+app/tdeck/spinningfish/americanidiot.decomp.8000.3200
+app/tdeck/spinningfish/spinningfish.16000.wav
+app/tdeck/spinningfish/spinningfish.48000.wav
+app/tdeck/spinningfish/spinningfish.raw
+app/tdeck/spinningfish/spinningfish.wav
+app/tdeck/spinningfish/funky town low quality.mp3
+app/tdeck/spinningfish/hottogo.48000.wav
