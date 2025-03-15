@@ -187,7 +187,7 @@
 &i2s0 {
 	pinctrl-0 = <&i2s0_default>;
 	pinctrl-names = "default";
-	status = "okay";
+	status = "disabled";
 	max: max@0{
 		compaitble = "adi,max98357";
 		status = "okay";
@@ -221,7 +221,9 @@
 	pinctrl-0 = <&spim3_default>;
 	pinctrl-names = "default";
 	status = "okay";
-	
+
+	// dma-enabled;	
+	//dma-host = <1>;
 
 	cs-gpios =  <&gpio0 12 GPIO_ACTIVE_LOW>, // LCD CS
 				<&gpio0 9 GPIO_ACTIVE_LOW>, // LORA CS
@@ -294,6 +296,9 @@
 	};
 };
 
+&psram0 {
+	status = "okay";
+};
 &twai {
 	pinctrl-0 = <&twai_default>;
 	pinctrl-names = "default";
