@@ -220,7 +220,7 @@ int main() {
 
   struct plm_file_adapter adapter;
   plm_buffer_t *buf = plm_file_adapter_init(
-      "/SD:/Video/barbiediamondcastle.v100k.mono.16000.mpeg", &adapter);
+      "/SD:/Video/spinningfish.mpeg", &adapter);
   // plm_buffer_t *buf =
   // plm_file_adapter_init("/SD:/Video/spinningfish.mpeg", &adapter);
   if (res != 0) {

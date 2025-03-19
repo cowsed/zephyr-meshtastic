@@ -66,7 +66,7 @@ int readblock(struct fs_file_t *fp, void *into) {
   int16_t buf[SAMPLE_NO] = {0};
   int num_read = fs_read(fp, buf, sizeof(buf));
   int16_t *outp = into;
-  int att = 2;
+  int att = 3;
   for (int i = 0; i < SAMPLE_NO; i++) {
     outp[i * 2] = buf[i] >> att;
     outp[i * 2 + 1] = buf[i] >> att;
@@ -123,15 +123,15 @@ int main() {
   printf("Starting playback\n");
   struct fs_file_t fil;
   fs_file_t_init(&fil);
-  int ret = fs_open(&fil, "/SD:/Audio/Caramelldansen.raw", FS_O_READ);
+  int ret = fs_open(&fil, "/SD:/Audio/spinningfish.raw", FS_O_READ);
   if (ret != 0) {
     printf("Error opening file: %d\n", ret);
+    return 0;
   }
 
   const struct device *dev_i2s = DEVICE_DT_GET(DT_ALIAS(i2s_tx));
   setup_i2s(dev_i2s);
   printf("I2S ready\n");
-
   void *my_block;
   ret = k_mem_slab_alloc(&tx_0_mem_slab, &my_block, K_FOREVER);
   if (ret != 0) {

@@ -187,7 +187,7 @@
 &i2s0 {
 	pinctrl-0 = <&i2s0_default>;
 	pinctrl-names = "default";
-	status = "disabled";
+	status = "okay";
 	max: max@0{
 		compaitble = "adi,max98357";
 		status = "okay";
