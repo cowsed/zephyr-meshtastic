@@ -268,13 +268,13 @@
 		};
 	};
 	sx1262: sx1262@1 {
-			compatible = "semtech,sx1262";
+			compatible = "semtech,sx1262-new";
 			reg = <0x01>;
 			spi-max-frequency = <3000000>;
-
-			dio2-tx-enable;
-			dio3-tcxo-voltage = <SX126X_DIO3_TCXO_1V8>;
-			tcxo-power-startup-delay-ms = <100>;
+			reg-mode = <0>;
+			// dio2-tx-enable;
+			tcxo-voltage = <SX126X_DIO3_TCXO_1V8>;
+			tcxo-wakeup-time = <100>;
 			
 			reset-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>; 
 

@@ -3,7 +3,7 @@ rsource "drivers/Kconfig"
 
 config MESHTASTIC
 	bool "enable meshtastic subsystem"
-	select LORA
+	select LORA_BASICS_MODEM_DRIVERS
 	select ZBUS
 	select NANOPB
 	select BASE64

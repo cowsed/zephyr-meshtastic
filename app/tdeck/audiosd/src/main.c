@@ -66,7 +66,7 @@ int readblock(struct fs_file_t *fp, void *into) {
   int16_t buf[SAMPLE_NO] = {0};
   int num_read = fs_read(fp, buf, sizeof(buf));
   int16_t *outp = into;
-  int att = 3;
+  int att = 5;
   for (int i = 0; i < SAMPLE_NO; i++) {
     outp[i * 2] = buf[i] >> att;
     outp[i * 2 + 1] = buf[i] >> att;

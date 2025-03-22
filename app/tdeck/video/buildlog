@@ -1,0 +1,19 @@
+-- west flash: rebuilding
+[0/1] Re-running CMake...
+-- Application: /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/video
+-- CMake version: 3.31.6
+-- Cache files will be written to: /home/unknown/.cache/zephyr
+-- Zephyr version: 4.1.99 (/home/unknown/Clubs/Launch/Zephyr/zephyr)
+-- Found west (found suitable version "1.3.0", minimum required is "0.14.0")
+-- Board: tdeck, qualifiers: esp32s3/procpu
+-- Found host-tools: zephyr 0.17.0 (/opt/zephyr-sdk)
+-- Found toolchain: zephyr 0.17.0 (/opt/zephyr-sdk)
+-- Found BOARD.dts: /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/boards/tdeck/tdeck_esp32s3_procpu.dts
+-- Generated zephyr.dts: /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/video/build/zephyr/zephyr.dts
+-- Generated pickled edt: /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/video/build/zephyr/edt.pickle
+-- Generated devicetree_generated.h: /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/video/build/zephyr/include/generated/zephyr/devicetree_generated.h
+-- Including generated dts.cmake file: /home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/video/build/zephyr/dts.cmake
+Parsing /home/unknown/Clubs/Launch/Zephyr/zephyr/Kconfig
+-- Configuring incomplete, errors occurred!
+FAILED: build.ninja 
+/usr/bin/cmake --regenerate-during-build -S/home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/video -B/home/unknown/Clubs/Launch/Zephyr/zephyr-meshtastic/app/tdeck/video/build
